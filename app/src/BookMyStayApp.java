@@ -14,6 +14,7 @@ class RoomInventory {
     public int getAvailability(String roomType) {
         return roomAvailability.getOrDefault(roomType, 0);
     }
+
 }
 
 class InvalidBookingException extends Exception {
