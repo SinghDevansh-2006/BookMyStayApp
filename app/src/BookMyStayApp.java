@@ -1,70 +1,76 @@
-import java.util.*;
 
-class Reservation {
+abstract class Room {
 
-    private String guestName;
-    private String roomType;
+    protected int numberOfBeds;
 
-    public Reservation(String guestName, String roomType) {
-        this.guestName = guestName;
-        this.roomType = roomType;
+    protected int squareFeet;
+
+    protected double pricePerNight;
+
+    public Room(int numberOfBeds, int squareFeet, double pricePerNight) {
+        this.numberOfBeds = numberOfBeds;
+        this.squareFeet = squareFeet;
+        this.pricePerNight = pricePerNight;
     }
 
-    public String getGuestName() {
-        return guestName;
-    }
-
-    public String getRoomType() {
-        return roomType;
-    }
-}
-
-class BookingHistory {
-
-    private List<Reservation> confirmedReservations;
-
-    public BookingHistory() {
-        confirmedReservations = new ArrayList<>();
-    }
-
-    public void addReservation(Reservation reservation) {
-        confirmedReservations.add(reservation);
-    }
-
-    public List<Reservation> getConfirmedReservations() {
-        return confirmedReservations;
+    public void displayRoomDetails() {
+        System.out.println("Beds: " + numberOfBeds);
+        System.out.println("Size: " + squareFeet + " sqft");
+        System.out.println("Price per night: " + pricePerNight);
     }
 }
 
-class BookingReportService {
 
-    public void generateReport(BookingHistory history) {
+class SingleRoom extends Room {
 
-        System.out.println("\nBooking History Report");
-
-        for (Reservation r : history.getConfirmedReservations()) {
-            System.out.println("Guest: " + r.getGuestName() + ", Room Type: " + r.getRoomType());
-        }
+    public SingleRoom() {
+        super(1, 230, 1500.0);
     }
 }
+
+
+class DoubleRoom extends Room {
+
+    public DoubleRoom() {
+        super(2, 400, 2300.0);
+    }
+}
+
+
+class SuiteRoom extends Room {
+
+    public SuiteRoom() {
+        super(3, 750, 5000.0);
+    }
+}
+
 
 public class BookMyStayApp {
 
     public static void main(String[] args) {
 
-        System.out.println("Booking History and Reporting");
+        System.out.println("Hotel Room Initialization\n");
 
-        BookingHistory history = new BookingHistory();
-        BookingReportService reportService = new BookingReportService();
+        // Create room objects
+        Room singleRoom = new SingleRoom();
+        Room doubleRoom = new DoubleRoom();
+        Room suiteRoom = new SuiteRoom();
 
-        Reservation r1 = new Reservation("Abhi", "Single");
-        Reservation r2 = new Reservation("Subha", "Double");
-        Reservation r3 = new Reservation("Vanmathi", "Suite");
+        // Static availability variables
+        int singleRoomAvailable = 5;
+        int doubleRoomAvailable = 3;
+        int suiteRoomAvailable = 2;
 
-        history.addReservation(r1);
-        history.addReservation(r2);
-        history.addReservation(r3);
+        System.out.println("Single Room:");
+        singleRoom.displayRoomDetails();
+        System.out.println("Available: " + singleRoomAvailable);
 
-        reportService.generateReport(history);
+        System.out.println("\nDouble Room:");
+        doubleRoom.displayRoomDetails();
+        System.out.println("Available: " + doubleRoomAvailable);
+
+        System.out.println("\nSuite Room:");
+        suiteRoom.displayRoomDetails();
+        System.out.println("Available: " + suiteRoomAvailable);
     }
 }
