@@ -16,7 +16,6 @@ class RoomInventory {
     }
 
 }
-
 class InvalidBookingException extends Exception {
 
     public InvalidBookingException(String message) {
